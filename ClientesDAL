@@ -1,0 +1,183 @@
+using System;
+using System.Collections.Generic;
+using ConexionCSharpconMySQL.ConexionCSharpconMySQL;
+using MySql.Data.MySqlClient;
+
+namespace ConexionCSharpconMySQL
+{
+	class ClientesDAL
+	{
+		public static int Agregar(Cliente pCliente)
+		{
+
+			int retorno = 0;
+
+			MySqlCommand comando=new MySqlCommand(string.Format("Insert into clientes (Nombre, Apellido, Fecha_Nacimiento, Direccion) values ('{0}','{1}','{2}', '{3}')",
+			                                                    pCliente.Nombre, pCliente.Apellido, pCliente.Fecha_Nac, pCliente.Direccion), BdComun.ObtenerConexion());
+			retorno = comando.ExecuteNonQuery();
+			return  retorno;
+		}
+		
+		
+		public static List<Cliente> Buscar(string pNombre, string pApellido)
+
+		{
+
+			List<Cliente> _lista = new List<Cliente>();
+
+			
+
+			MySqlCommand _comando = new MySqlCommand(String.Format(
+
+				"SELECT IdCliente, Nombre, Apellido, Fecha_Nacimiento, Direccion FROM clientes  where Nombre ='{0}' or Apellido='{1}'", pNombre,pApellido), BdComun.ObtenerConexion());
+			MySqlDataReader _reader = _comando.ExecuteReader();
+			while (_reader.Read())
+			{
+				Cliente pCliente = new Cliente();
+				pCliente.Id = _reader.GetInt32(0);
+				pCliente.Nombre = _reader.GetString(1);
+				pCliente.Apellido = _reader.GetString(2);
+				pCliente.Fecha_Nac = _reader.GetString(3);
+				pCliente.Direccion = _reader.GetString(4);
+				
+				_lista.Add(pCliente);
+			}
+			return _lista;
+		}
+		
+		public static Cliente ObtenerCliente(int pId)
+
+		{
+
+			Cliente pCliente = new Cliente();
+
+			MySqlConnection conexion = BdComun.ObtenerConexion();
+			MySqlCommand _comando = new MySqlCommand(String.Format("SELECT IdCliente, Nombre, Apellido, Fecha_Nacimiento, Direccion FROM clientes where IdCliente={0}", pId), conexion);
+			MySqlDataReader _reader = _comando.ExecuteReader();
+			while (_reader.Read())
+
+			{
+				pCliente.Id = _reader.GetInt32(0);
+				pCliente.Nombre = _reader.GetString(1);
+				pCliente.Apellido = _reader.GetString(2);
+				pCliente.Fecha_Nac = _reader.GetString(3);
+				pCliente.Direccion = _reader.GetString(4);
+				
+			}
+			conexion.Close();
+			return pCliente;
+		}
+		
+		public static int Actualizar(Cliente pCliente)
+		{
+			int retorno = 0;
+			MySqlConnection conexion = BdComun.ObtenerConexion();
+			
+			MySqlCommand comando = new MySqlCommand(string.Format("Update clientes set Nombre='{0}', Apellido='{1}', Fecha_Nacimiento='{2}', Direccion='{3}' where IdCliente={4}",
+			                                                      pCliente.Nombre, pCliente.Apellido, pCliente.Fecha_Nac, pCliente.Direccion, pCliente.Id), conexion);
+
+			retorno = comando.ExecuteNonQuery();
+			conexion.Close();
+			
+			return retorno;
+
+			
+		}
+		public static int Eliminar(int pId)
+			
+		{
+			int retorno = 0;
+			MySqlConnection conexion = BdComun.ObtenerConexion();
+			MySqlCommand comando = new MySqlCommand(string.Format("Delete From clientes where IdCliente={0}", pId), conexion);
+			retorno = comando.ExecuteNonQuery();
+			conexion.Close();
+			return retorno;
+
+		}
+		// Aerolinea
+		
+		public static int Agregar(Aerolinea pAerolinea)
+		{
+
+			int retorno = 0;
+
+			MySqlCommand comando=new MySqlCommand(string.Format("Insert into aerolinea (id_vuelos, NombreEmpresa, TiposVuelo, Privado, Dias, Horarios) values ('{0}','{1}','{2}', '{3}', '{4}', '{5}')",
+			                                                    pAerolinea.id_Vuelos, pAerolinea.NombreEmpresa, pAerolinea.TiposVuelo, pAerolinea.Privado, pAerolinea.Dias, pAerolinea.Horarios), BdComun.ObtenerConexion());
+			retorno = comando.ExecuteNonQuery();
+			return  retorno;
+
+		}
+		
+		// Transporte
+		public static int Agregar(Transporte pTransporte)
+		{
+
+			int retorno = 0;
+
+			MySqlCommand comando=new MySqlCommand(string.Format("Insert into trasnporte (id_trasporte, Empresa, Horarios, Clase) values ('{0}','{1}','{2}', '{3}')",
+			                                                    pTransporte.id_transporte, pTransporte.Empresa, pTransporte.Horarios, pTransporte.Clase), BdComun.ObtenerConexion());
+			retorno = comando.ExecuteNonQuery();
+			return  retorno;
+
+		}
+		
+		//Venta
+		
+		public static int Agregar(Venta pVenta)
+		{
+
+			int retorno = 0;
+
+			MySqlCommand comando=new MySqlCommand(string.Format("Insert into venta (id_Venta, DescripcionVenta, Fecha, Cliente, Descuento, PrecioTReal, CantidadVenta, MontoTotal) values ('{0}','{1}','{2}', '{3}', '{4}', '{5}', '{6}', '{7}')",
+			                                                    pVenta.id_Venta, pVenta.DescripcionVenta, pVenta.Fecha, pVenta.Cliente, pVenta.Descuento, pVenta.PrecioTReal, pVenta.CantidadVenta, pVenta.MontoTotal), BdComun.ObtenerConexion());
+			retorno = comando.ExecuteNonQuery();
+			return  retorno;
+
+		}
+		
+		//Hotel
+		
+		public static int Agregar(Hotel pHotel)
+		{
+
+			int retorno = 0;
+
+			MySqlCommand comando=new MySqlCommand(string.Format("Insert into Hotel (id_Hotel, Nombre, Ciudad, Telefono, Promociones, Habitaciones) values ('{0}','{1}','{2}', '{3}', '{4}', '{5}')",
+			                                                    pHotel.id_Hotel, pHotel.Nombre, pHotel.Ciudad, pHotel.Telefono, pHotel.Promociones, pHotel.Habitaciones), BdComun.ObtenerConexion());
+			retorno = comando.ExecuteNonQuery();
+			return  retorno;
+
+		}
+		
+		//Paquete
+		
+		public static int Agregar(Paquete pPaquete)
+		{
+
+			int retorno = 0;
+
+			MySqlCommand comando=new MySqlCommand(string.Format("Insert into paquete (id_Paquetes, DescPaq, Destinos, Costos, FechaSali, FechaLLeg, Categoria, Descuentos, Rembolso) values ('{0}','{1}','{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}')",
+			                                                    pPaquete.id_Paquetes, pPaquete.id_Paquetes, pPaquete.DescPaq, pPaquete.Destinos, pPaquete.Costos, pPaquete.FechaSali, pPaquete.FechaLLeg, pPaquete.Categoria, pPaquete.Descuentos, pPaquete.Rembolso), BdComun.ObtenerConexion());
+			retorno = comando.ExecuteNonQuery();
+			return  retorno;
+
+		}
+		//Destino
+		public static int Agregar(Destino pDestino)
+		{
+
+			int retorno = 0;
+
+			MySqlCommand comando=new MySqlCommand(string.Format("Insert into Destino (id_Destinos, LugarDest, HoraDest, FechaDest) values ('{0}','{1}','{2}', '{3}')",
+			                                                    pDestino.id_Destinos, pDestino.LugarDest, pDestino.HoraDest, pDestino.FechaDest), BdComun.ObtenerConexion());
+			retorno = comando.ExecuteNonQuery();
+			return  retorno;
+
+		}
+
+
+
+		
+		
+	}
+}
