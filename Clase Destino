@@ -1,0 +1,40 @@
+using System;
+
+namespace ConexionCSharpconMySQL
+{
+	/// <summary>
+	/// Description of Destino.
+	using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ConexionCSharpconMySQL
+{
+    class Destino
+    {
+           public string id_Destinos  { get; set; }
+		public string  LugarDest { get; set; }
+		public string  HoraDest{ get; set; }
+		public string  FechaDest{ get; set; }
+		
+		
+
+		public Destino () { }
+
+		public Destino(string pid_Destinos , string pLugarDest , string pHoraDest, string pFechaDest )
+
+		{
+			this.id_Destinos = pid_Destinos;
+			this.LugarDest = pLugarDest;
+			this.HoraDest = pHoraDest;
+			this.FechaDest = pFechaDest;
+			
+		
+		}
+		
+
+	}
+	
+}
+}
