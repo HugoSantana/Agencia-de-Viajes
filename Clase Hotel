@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ConexionCSharpconMySQL
+{
+    class Hotel
+    {
+        public string id_Hotel  { get; set; }
+		public string Nombre { get; set; }
+		public string Ciudad { get; set; }
+		public string Telefono { get; set; }
+	public string Promociones { get; set; }
+    public string Habitaciones { get; set; }
+  
+		
+
+		public Hotel () { }
+
+		public Hotel(string pid_Hotel, string pNombre, string pCiudad, string pTelefono, string pPromociones,string pHabitaciones)
+
+		{
+			this.id_Hotel = pid_Hotel;
+			this.Nombre = pNombre;
+			this.Ciudad = pCiudad;
+			this.Telefono = pTelefono;
+            this.Promociones = pPromociones;
+            this.Habitaciones = pHabitaciones;
+            
+			
+		}
+		
+
+	}
+	
+}
+   
