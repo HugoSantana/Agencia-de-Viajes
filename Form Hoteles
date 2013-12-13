@@ -1,0 +1,63 @@
+
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace ConexionCSharpconMySQL
+{
+	/// <summary>
+	/// Description of Hoteles.
+	/// </summary>
+	public partial class Hoteles : Form
+	{
+		public Hoteles()
+		{
+			//
+			// The InitializeComponent() call is required for Windows Forms designer support.
+			//
+			InitializeComponent();
+			
+			//
+			// TODO: Add constructor code after the InitializeComponent() call.
+			//
+		}
+		
+		void BtnGuardarHotelClick(object sender, EventArgs e)
+		{
+			
+			Hotel pHotel = new Hotel();
+			pHotel.id_Hotel = txtIdHotel.Text.Trim();
+			pHotel.Nombre = txtNombreHotel.Text.Trim();
+			pHotel.Ciudad = txtCiudadHotel.Text.Trim();
+			pHotel.Telefono = txtTelefonoHotel.Text.Trim();
+			pHotel.Promociones = cbPromocionHotel.Text.Trim();
+			pHotel.Habitaciones = cbHabitacionHotel.Text.Trim();
+			
+			
+			
+				int resultado = ClientesDAL.Agregar(pHotel);
+			if (resultado > 0)
+			{
+				MessageBox.Show("Registro Guardado Con Exito!!", "Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+			else
+			{
+				MessageBox.Show("No se pudo guardar el Registro", "Fallo!!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			}
+			
+		}
+		
+		void BtnRegresarHotelClick(object sender, EventArgs e)
+		{
+			this.Close();
+		}
+		
+		void BtnLimpiarClick(object sender, EventArgs e)
+		{
+			txtIdHotel.Clear();
+			txtNombreHotel.Clear();
+			txtCiudadHotel.Clear();
+			txtTelefonoHotel.Clear();
+		}
+	}
+}
