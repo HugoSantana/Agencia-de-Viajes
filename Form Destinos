@@ -1,0 +1,62 @@
+
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+using ConexionCSharpconMySQL.ConexionCSharpconMySQL;
+
+namespace ConexionCSharpconMySQL
+{
+	/// <summary>
+	/// Description of Destinos.
+	/// </summary>
+	public partial class Destinos : Form
+	{
+		public Destinos()
+		{
+			//
+			// The InitializeComponent() call is required for Windows Forms designer support.
+			//
+			InitializeComponent();
+			
+			//
+			// TODO: Add constructor code after the InitializeComponent() call.
+			//
+		}
+		
+		void BtnGuardarDestinosClick(object sender, EventArgs e)
+		{
+			Destino pDestino = new Destino();
+			pDestino.id_Destinos = txtIdDestinos.Text.Trim();
+			pDestino.LugarDest = txtLugarDestinos.Text.Trim();
+			pDestino.HoraDest = cbHoraDestino.Text.Trim();
+			pDestino.FechaDest = dtpFechaDestinos.Text.Trim();
+			
+			
+			
+			
+				int resultado = ClientesDAL.Agregar(pDestino);
+			if (resultado > 0)
+			{
+				MessageBox.Show("Registro Guardado Con Exito!!", "Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+			else
+			{
+				MessageBox.Show("No se pudo guardar el Registro", "Fallo!!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			}
+			
+			
+		}
+		
+		void BtnRegresarDdestinosClick(object sender, EventArgs e)
+		{
+			this.Close();
+		}
+		
+		void BtnLimpiarClick(object sender, EventArgs e)
+		{
+			txtIdDestinos.Clear();
+			txtLugarDestinos.Clear();
+		}
+	}
+}
